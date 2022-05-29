@@ -13,11 +13,12 @@ const App = () => {
   const [products, setProducts] = useState([]);     // creates a new state
   const [cart, setCart] = useState({}); // create new state and sets it to an empty object
 
+  console.log("products App.js, line 16", products);
+
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();  //{data} = response (destructured code)}
 
     setProducts(data);
-    console.log("product.list",data);
   }
     const fetchCart = async () => {
     setCart(await commerce.cart.retrieve())  //destructured version of code below
@@ -49,7 +50,10 @@ const App = () => {
   useEffect(() => {  //useEffect hook
     fetchProducts();
     fetchCart();
-  }, []);            //the dependency array is set to empty array causing it to run only once on start
+  }, []);       
+  
+  console.log("products", products);
+  //the dependency array is set to empty array causing it to run only once on start
 
   
 
@@ -57,24 +61,27 @@ const App = () => {
 
   //  <div>
   //     <Navbar totalItems={cart.total_items} />
-  //       {/* <Products products={products} onAddToCart={handleAddToCart} />     */}
+  //       {<Products products={products} onAddToCart={handleAddToCart} /> }
   //     <Cart cart={cart}/>      
   // </div>
 
     <Router>
-      <Navbar totalItems={cart.total_items} />
-      <Routes>
+    <div>
+       <Navbar totalItems={cart.total_items} />
+      <Routes>      
         <Route path="/" element={<Products />} 
-          onAddToCart={handleAddToCart}></Route>
+          onAddToCart={handleAddToCart} />
+        
         <Route path="/cart" element={<Cart />}
-          handleUpdateCartQty={handleUpdateCartQty}  //prop={function}
-          handleRemoveFromCart={handleRemoveFromCart}
-          handleEmptyCart={handleEmptyCart}>
-        </Route>
-        <Route path="/checkout" element={<Checkout />}>
-        </Route>
+          onUpdateCartQty={handleUpdateCartQty}  
+          onRemoveFromCart={handleRemoveFromCart}
+          onEmptyCart={handleEmptyCart} />
+       
+        <Route path="/checkout" element={<Checkout />} />
+        
       </Routes>
-    </Router>
+    </div>
+   </Router>
   );
 }
 

@@ -14,14 +14,14 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart}) => {
     </Typography>
   );
 
-  // if (!cart.line_items) return 'Loading';
+  if (!cart.line_items) return 'Loading';
   
   const FilledCart = ({cart}) => ( //function that returns jsx
     <>
       <Grid container spacing={3}> 
         {cart.line_items.map((item) => (  
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} /> onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart}
+            <CartItem item={item} onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart}/>
           </Grid>  
         ))}
       </Grid>
